@@ -1,0 +1,3 @@
+rootProject.name = 'joker-microservices'
+
+include 'discovery-server'
