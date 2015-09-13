@@ -1,0 +1,26 @@
+@startuml
+
+component gateway
+
+component discovery_server
+
+component config_server
+component user_service
+component fee_service
+component payment_service
+
+[fee_service] -l-> [user_service]
+[fee_service] -r-> [payment_service]
+[fee_service] <-u--> gateway
+[payment_service] -u--> gateway
+[user_service] -u--> gateway
+
+fee_service <-u-> discovery_server
+user_service <-u--> discovery_server
+payment_service <-u-> discovery_server
+gateway -l-> discovery_server
+
+fee_service -d-> config_server
+user_service -d-> config_server
+payment_service -d-> config_server
+@enduml
