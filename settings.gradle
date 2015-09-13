@@ -1,3 +1,8 @@
 rootProject.name = 'joker-microservices'
 
 include 'discovery-server'
+include 'config-server'
+
+include 'fee-service'
+include 'payment-service'
+include 'user-service'
