@@ -2,6 +2,7 @@ package ru.lavcraft.microservices.fee;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,8 +20,10 @@ import java.util.Random;
 @RequestMapping("/user")
 public class UserController {
   @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-  public EnhancedUser user(@PathVariable Integer id) {
-    return EnhancedUser.builder()
+  public ResponseEntity user(@PathVariable Integer id) {
+    if (id != 1)
+      return ResponseEntity.notFound().build();
+    return ResponseEntity.ok().body(EnhancedUser.builder()
         .id(id)
         .firstname("Test")
         .lastname("Testovich")
@@ -28,6 +31,6 @@ public class UserController {
             .amount(new Random().nextInt())
             .currency("RUR")
             .build())
-        .build();
+        .build());
   }
 }
