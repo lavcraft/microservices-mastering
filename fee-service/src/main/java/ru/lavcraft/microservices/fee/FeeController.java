@@ -44,7 +44,19 @@ public class FeeController {
             .user(userInfo)
             .fee(resolveFee(paymentInfo))
             .build()
-    ).toBlocking().single();
+    ).doOnError(throwable -> {
+      Throwable cause = throwable.getCause();
+      log.error("Error: ", cause);
+      throw new RuntimeException(cause);
+    }).onErrorReturn(throwable1 -> FeeResponse.builder()
+        .fee(FeeResponse.Fee.builder()
+            .max(0)
+            .min(0)
+            .currency("UNDEFINED")
+            .build())
+        .build())
+        .toBlocking()
+        .single();
   }
 
 
