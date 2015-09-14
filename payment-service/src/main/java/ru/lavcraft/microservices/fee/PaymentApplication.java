@@ -7,12 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -39,7 +37,7 @@ class PaymentController {
   @RequestMapping(value = "/check", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity getPaymetnPermission(@RequestParam Long userId, @RequestParam Optional<OperationType> operationType) {
     if (userId == 100)
-      throw new RuntimeException("UserIsBlocked");
+      throw new UserIsBlockedException();
 
     return ResponseEntity.ok(Response.builder()
         .additionalFee(Response.Fee.builder()
@@ -74,4 +72,11 @@ enum OperationType {
   INTERNAL,
   CUSTOM,
   INTERNATIONAL
+}
+
+@ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE)
+class UserIsBlockedException extends RuntimeException {
+  public UserIsBlockedException() {
+    super("UserIsBlocked");
+  }
 }
