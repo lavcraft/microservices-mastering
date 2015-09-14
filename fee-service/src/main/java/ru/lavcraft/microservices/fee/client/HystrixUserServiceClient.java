@@ -28,7 +28,7 @@ public class HystrixUserServiceClient {
     };
   }
 
-  private Observable<BasicUser> getDefaultUser(){
-    return Observable.just(BasicUser.builder().firstname(UNDEFINED).lastname(UNDEFINED).build());
+  private BasicUser getDefaultUser(Long id){
+    return BasicUser.builder().firstname(UNDEFINED).lastname(UNDEFINED).build();
   }
 }
