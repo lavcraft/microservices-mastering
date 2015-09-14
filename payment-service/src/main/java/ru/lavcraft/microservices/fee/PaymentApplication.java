@@ -45,6 +45,7 @@ class PaymentController {
         .additionalFee(Response.Fee.builder()
             .max(1000)
             .min(100)
+            .currency("RUR")
             .build())
         .access(ACCESS_FULL)
         .operationType(operationType.orElse(OperationType.EXTERNAL))
@@ -61,9 +62,10 @@ class Response {
 
   @Data
   @Builder
-  static class Fee {
-    int max;
-    int min;
+  public static class Fee {
+    private int max;
+    private int min;
+    private String currency;
   }
 }
 
