@@ -7,3 +7,5 @@ include 'gateway-server'
 include 'fee-service'
 include 'payment-service'
 include 'user-service'
+
+include 'user-thrift-service'

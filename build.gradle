@@ -19,8 +19,10 @@ allprojects {
 
   repositories {
     mavenCentral()
+    jcenter()
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
+    maven { url "http://dl.bintray.com/aatarasoff/maven" }
   }
 
   dependencyManagement {

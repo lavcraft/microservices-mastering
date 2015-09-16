@@ -1,5 +1,6 @@
 package ru.lavcraft.microservices.fee;
 
+import info.developerblog.services.user.TUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,23 +39,38 @@ public class FeeController {
 
 
     return Observable.zip(
-        userServiceClient.getUserById(userId),
+//        userServiceClient.getUserById(userId),
+//        paymentServiceClient.getPaymentInfoForUser(userId, request.getOperationType()),
+//        (BasicUser userInfo, PaymentInfo paymentInfo) -> FeeResponse.builder()
+//            .user(userInfo)
+//            .fee(resolveFee(paymentInfo))
+//            .build()
+        userServiceClient.getTUserById(userId),
         paymentServiceClient.getPaymentInfoForUser(userId, request.getOperationType()),
-        (BasicUser userInfo, PaymentInfo paymentInfo) -> FeeResponse.builder()
-            .user(userInfo)
-            .fee(resolveFee(paymentInfo))
-            .build()
+        (TUser userInfo, PaymentInfo paymentInfo) -> FeeResponse.builder()
+                .user(BasicUser.builder()
+                        .id(userInfo.getId())
+                        .firstname(userInfo.getFirstname())
+                        .lastname(userInfo.getLastname())
+                        .balance(BasicUser.Balance.builder()
+                                .amount((int)userInfo.getBalance().getAmount())
+                                .build()
+                        )
+                        .build()
+                )
+                .fee(resolveFee(paymentInfo))
+                .build()
     ).doOnError(throwable -> {
       Throwable cause = throwable.getCause();
       log.error("Error: ", cause);
       throw new RuntimeException(cause);
     }).onErrorReturn(throwable1 -> FeeResponse.builder()
-        .fee(FeeResponse.Fee.builder()
-            .max(0)
-            .min(0)
-            .currency("UNDEFINED")
+            .fee(FeeResponse.Fee.builder()
+                    .max(0)
+                    .min(0)
+                    .currency("UNDEFINED")
+                    .build())
             .build())
-        .build())
         .toBlocking()
         .single();
   }
