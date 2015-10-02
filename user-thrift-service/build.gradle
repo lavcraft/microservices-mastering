@@ -20,6 +20,9 @@ repositories {
 
 apply plugin: 'thrift'
 
+apply plugin: 'com.bmuschko.docker-remote-api'
+apply plugin: 'com.bmuschko.docker-java-application'
+
 task generateThriftJava(type : ru.trylogic.gradle.thrift.tasks.ThriftCompileTask) {
   generator = 'java:private-members'
   destinationDir = file("generated-src/generated/java")
@@ -46,6 +49,15 @@ idea {
 }
 
 compileJava.dependsOn generateThriftJava
+
+docker {
+  javaApplication {
+    baseImage = 'java'
+    maintainer = 'aatarasoff'
+    port = 8080
+    tag = "greetings"
+  }
+}
 
 dependencies {
   def thriftVersion = '0.9.2';
