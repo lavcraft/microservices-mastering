@@ -1,0 +1,37 @@
+discovery-server:
+  image: discovery-server
+  container_name: discovery-server
+  ports:
+    - "8761:8761"
+  environment:
+  restart: always
+
+fee-service:
+  image: fee-service
+  container_name: fee-service
+  ports:
+    - "8080"
+  environment:
+  links:
+    - discovery-server
+  restart: always
+
+user-service:
+  image: user-service
+  container_name: user-service
+  ports:
+    - "8080"
+  environment:
+  links:
+      - discovery-server
+  restart: always
+
+payment-service:
+  image: payment-service
+  container_name: payment-service
+  ports:
+    - "8080"
+  environment:
+  links:
+      - discovery-server
+  restart: always
