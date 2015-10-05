@@ -1,9 +1,6 @@
 package ru.lavcraft.microservices.fee;
 
-import info.developerblog.services.user.TBalance;
-import info.developerblog.services.user.TUser;
-import info.developerblog.services.user.TUserNotFoundException;
-import info.developerblog.services.user.TUserService;
+import info.developerblog.services.user.*;
 import info.developerblog.spring.thrift.annotation.ThriftHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
@@ -18,11 +15,11 @@ import java.util.Random;
 @ThriftHandler("/thrift/user")
 public class UserController implements TUserService.Iface {
     @Override
-    public TUser getUserById(long id) throws TException {
-        if (id != 1)
+    public TUser getUserById(TAuthData authData) throws TException {
+        if (authData.getUserId() != 1)
             throw new TUserNotFoundException("User is not found!");
         return new TUser()
-            .setId(id)
+            .setId(authData.getUserId())
             .setFirstname("Test")
             .setLastname("Testovich")
             .setBalance(new TBalance()

@@ -2,6 +2,7 @@ package ru.lavcraft.microservices.fee.client;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
+import info.developerblog.services.user.TAuthData;
 import info.developerblog.services.user.TUser;
 import info.developerblog.services.user.TUserNotFoundException;
 import info.developerblog.services.user.TUserService;
@@ -42,7 +43,7 @@ public class HystrixUserServiceClient {
       @Override
       public TUser invoke() {
         try {
-          return tUserServiceClient.getUserById(id);
+          return tUserServiceClient.getUserById(new TAuthData(id));
         } catch (TUserNotFoundException e) {
           return getTDefaultUser(id);
         } catch (TException e) {

@@ -4,6 +4,10 @@ exception TUserNotFoundException {
     1: string message
 }
 
+struct TAuthData {
+    1: required i64 userId
+}
+
 struct TUser {
     1: required i64 id
     2: optional string lastname
@@ -17,5 +21,5 @@ struct TBalance {
 }
 
 service TUserService {
-    TUser getUserById(1: required i64 id) throws (1: TUserNotFoundException e)
+    TUser getUserById(1: required TAuthData authData) throws (1: TUserNotFoundException e)
 }
