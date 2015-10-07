@@ -37,7 +37,7 @@ registaror:
   restart: always
 
 fee-service:
-  image: fee-service
+  image: fee-service-external
   container_name: fee-service
   dns: 172.17.42.1
   ports:
@@ -46,7 +46,7 @@ fee-service:
     - "SERVICE_NAME=fee-service"
     - "SERVER_PORT=8081"
     - "APPLICATION_DOMAIN=192.168.99.100"
-    - "SPRING_PROFILES_ACTIVE=consul"
+    - "SPRING_PROFILES_ACTIVE=eureka"
   restart: always
 
 user-service:

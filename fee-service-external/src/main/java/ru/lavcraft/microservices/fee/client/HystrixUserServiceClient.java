@@ -32,7 +32,7 @@ public class HystrixUserServiceClient {
         try {
           return tUserServiceClient.getUserById(new TAuthToken(token));
         } catch (TUserNotFoundException e) {
-          return getTDefaultUser(0L);
+          return getTDefaultUser(token);
         } catch (TException e) {
           throw new RuntimeException(e);
         }
@@ -40,7 +40,7 @@ public class HystrixUserServiceClient {
     };
   }
 
-  private TUser getTDefaultUser(Long id){
+  private TUser getTDefaultUser(String token){
     return new TUser().setLastname(UNDEFINED).setFirstname(UNDEFINED);
   }
 }
