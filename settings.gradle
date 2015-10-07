@@ -5,6 +5,7 @@ include 'config-server'
 include 'gateway-server'
 
 include 'fee-service'
+include 'fee-service-external'
 include 'payment-service'
 include 'user-service'
 

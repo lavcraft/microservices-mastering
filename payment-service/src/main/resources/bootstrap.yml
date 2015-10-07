@@ -1,7 +1,8 @@
 eureka:
   client:
+    registryFetchIntervalSeconds: 5
     serviceUrl:
-      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
-#  instance:
-#    hostname: ${APPLICATION_DOMAIN:payment}
+      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://192.168.99.100:8761/eureka/}
+  instance:
+    hostname: ${APPLICATION_DOMAIN}
 #    nonSecurePort: 80

@@ -57,9 +57,12 @@ dependencies {
   thrift "org.apache.thrift:thrift:$thriftVersion:${platformMapping.get(OperatingSystem.current())}@bin"
 
   compile "org.apache.thrift:libthrift:${thriftVersion}"
-  compile("org.springframework.boot:spring-boot-starter-actuator")
-  compile("org.springframework.cloud:spring-cloud-starter-zuul")
-  compile("org.springframework.cloud:spring-cloud-starter-eureka")
 
-  compile 'info.developerblog.spring.thrift:spring-thrift-api-gateway:0.0.1'
+  compile("org.springframework.boot:spring-boot-starter-actuator")
+  compile("org.springframework.boot:spring-boot-starter-web")
+  compile("org.springframework.cloud:spring-cloud-starter-feign")
+  compile("org.springframework.cloud:spring-cloud-starter-eureka")
+  compile("org.springframework.cloud:spring-cloud-starter-hystrix")
+
+  compile 'info.developerblog.spring.thrift:spring-thrift-starter:0.0.1'
 }

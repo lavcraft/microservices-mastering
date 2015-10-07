@@ -3,35 +3,71 @@ discovery-server:
   container_name: discovery-server
   ports:
     - "8761:8761"
+  net: "host"
   environment:
+  restart: always
+
+gateway-server:
+  image: gateway-server
+  container_name: gateway-server
+  ports:
+    - "9000:9000"
+  net: "host"
+  environment:
+    - "APPLICATION_DOMAIN=192.168.99.100"
+  restart: always
+
+consul:
+  image: gliderlabs/consul-server
+  container_name: consul
+  ports:
+    - "8400:8400"
+    - "8500:8500"
+    - "53:8600/udp"
+  command: "-bootstrap -ui-dir /ui"
+  restart: always
+
+registaror:
+  image: gliderlabs/registrator
+  container_name: registrator
+  net: "host"
+  volumes:
+    - "/var/run/docker.sock:/tmp/docker.sock"
+  command: "-ip 192.168.99.100 consul://192.168.99.100:8500"
   restart: always
 
 fee-service:
   image: fee-service
   container_name: fee-service
+  dns: 172.17.42.1
   ports:
-    - "8080"
+    - "8081:8081"
   environment:
-  links:
-    - discovery-server
+    - "SERVICE_NAME=fee-service"
+    - "SERVER_PORT=8081"
+    - "APPLICATION_DOMAIN=192.168.99.100"
+    - "SPRING_PROFILES_ACTIVE=consul"
   restart: always
 
 user-service:
-  image: user-service
+  image: user-thrift-service
   container_name: user-service
   ports:
-    - "8080"
+    - "8082:8082"
   environment:
-  links:
-      - discovery-server
+    - "SERVICE_NAME=user-service"
+    - "SERVER_PORT=8082"
+    - "APPLICATION_DOMAIN=192.168.99.100"
   restart: always
+
 
 payment-service:
   image: payment-service
   container_name: payment-service
   ports:
-    - "8080"
+    - "8083:8083"
   environment:
-  links:
-      - discovery-server
+    - "SERVICE_NAME=payment-service"
+    - "SERVER_PORT=8083"
+    - "APPLICATION_DOMAIN=192.168.99.100"
   restart: always
