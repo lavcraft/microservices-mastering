@@ -15,7 +15,6 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @EnableThriftGateway
 @SpringBootApplication
-@ComponentScan(basePackages = { "ru.lavcraft", "info.developerblog" })
 public class ZuulServerApplication {
   public static void main(String[] args) {
     SpringApplication.run(ZuulServerApplication.class, args);

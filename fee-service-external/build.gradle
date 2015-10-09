@@ -64,5 +64,5 @@ dependencies {
   compile("org.springframework.cloud:spring-cloud-starter-eureka")
   compile("org.springframework.cloud:spring-cloud-starter-hystrix")
 
-  compile 'info.developerblog.spring.thrift:spring-thrift-starter:0.0.1'
+  compile 'info.developerblog.spring.thrift:spring-thrift-starter:0.0.2'
 }

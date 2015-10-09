@@ -1,7 +1,7 @@
 package ru.lavcraft.microservices.fee;
 
 import info.developerblog.services.user.*;
-import info.developerblog.spring.thrift.annotation.ThriftHandler;
+import ru.trylogic.spring.boot.thrift.annotation.ThriftHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
 

@@ -15,7 +15,6 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
-@ComponentScan(basePackages = { "ru.lavcraft", "info.developerblog" })
 public class FeeApplication {
   public static void main(String[] args) {
     SpringApplication.run(FeeApplication.class, args);
