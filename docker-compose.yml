@@ -31,6 +31,7 @@ fee-service:
     - "8080"
   environment:
     - "SERVICE_NAME=fee-service"
+    - "SERVICE_CHECK_HTTP=/health"
     - "SPRING_PROFILES_ACTIVE=consul"
   restart: always
 
@@ -41,6 +42,7 @@ user-service:
     - "8080"
   environment:
     - "SERVICE_NAME=user-service"
+    - "SERVICE_CHECK_HTTP=/health"
     - "SPRING_PROFILES_ACTIVE=consul"
   restart: always
 
@@ -51,5 +53,6 @@ payment-service:
     - "8080"
   environment:
     - "SERVICE_NAME=payment-service"
+    - "SERVICE_CHECK_HTTP=/health"
     - "SPRING_PROFILES_ACTIVE=consul"
   restart: always
