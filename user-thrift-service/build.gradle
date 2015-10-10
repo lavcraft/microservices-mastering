@@ -72,7 +72,10 @@ dependencies {
 
   compile("org.springframework.boot:spring-boot-starter-actuator")
   compile("org.springframework.boot:spring-boot-starter-web")
-  compile("org.springframework.cloud:spring-cloud-starter-eureka")
+
+  compile "org.springframework.cloud:spring-cloud-consul-core:1.0.0.M1"
+  compile "org.springframework.cloud:spring-cloud-consul-discovery:1.0.0.M1"
+  compile "org.springframework.cloud:spring-cloud-consul-config:1.0.0.M1"
 
   compile 'info.developerblog.spring.thrift:spring-thrift-starter:0.0.2'
 }
