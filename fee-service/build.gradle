@@ -68,5 +68,5 @@ dependencies {
   compile "org.springframework.cloud:spring-cloud-consul-discovery:1.0.0.M1"
   compile "org.springframework.cloud:spring-cloud-consul-config:1.0.0.M1"
 
-  compile 'info.developerblog.spring.thrift:spring-thrift-starter:0.0.2'
+  compile 'info.developerblog.spring.thrift:spring-thrift-starter:0.1.1'
 }
