@@ -21,7 +21,7 @@ public class HystrixUserServiceClient {
   public static final String UNDEFINED = "undefined";
   private final UserServiceClient userServiceClient;
 
-  @ThriftClient
+  @ThriftClient("user-service")
   TUserService.Client tUserServiceClient;
 
   @HystrixCommand(fallbackMethod = "getTDefaultUser")

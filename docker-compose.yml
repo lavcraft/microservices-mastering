@@ -1,20 +1,8 @@
-discovery-server:
-  image: discovery-server
-  container_name: discovery-server
-  ports:
-    - "8761:8761"
-  net: "host"
-  environment:
-  restart: always
-
 gateway-server:
   image: gateway-server
   container_name: gateway-server
   ports:
     - "9000:9000"
-  net: "host"
-  environment:
-    - "APPLICATION_DOMAIN=192.168.99.100"
   restart: always
 
 consul:
@@ -24,10 +12,10 @@ consul:
     - "8400:8400"
     - "8500:8500"
     - "53:8600/udp"
-  command: "-bootstrap -ui-dir /ui"
+  command: "-bootstrap -advertise 192.168.99.100 -ui-dir /ui"
   restart: always
 
-registaror:
+registrator:
   image: gliderlabs/registrator
   container_name: registrator
   net: "host"
@@ -38,36 +26,33 @@ registaror:
 
 fee-service:
   image: fee-service-external
-  container_name: fee-service
   dns: 172.17.42.1
   ports:
-    - "8081:8081"
+    - "8080"
   environment:
     - "SERVICE_NAME=fee-service"
-    - "SERVER_PORT=8081"
-    - "APPLICATION_DOMAIN=192.168.99.100"
-    - "SPRING_PROFILES_ACTIVE=eureka"
+    - "SERVICE_CHECK_HTTP=/health"
+    - "SPRING_PROFILES_ACTIVE=consul"
   restart: always
 
 user-service:
   image: user-thrift-service
-  container_name: user-service
+  dns: 172.17.42.1
   ports:
-    - "8082:8082"
+    - "8080"
   environment:
     - "SERVICE_NAME=user-service"
-    - "SERVER_PORT=8082"
-    - "APPLICATION_DOMAIN=192.168.99.100"
+    - "SERVICE_CHECK_HTTP=/health"
+    - "SPRING_PROFILES_ACTIVE=consul"
   restart: always
-
 
 payment-service:
   image: payment-service
-  container_name: payment-service
+  dns: 172.17.42.1
   ports:
-    - "8083:8083"
+    - "8080"
   environment:
     - "SERVICE_NAME=payment-service"
-    - "SERVER_PORT=8083"
-    - "APPLICATION_DOMAIN=192.168.99.100"
+    - "SERVICE_CHECK_HTTP=/health"
+    - "SPRING_PROFILES_ACTIVE=consul"
   restart: always

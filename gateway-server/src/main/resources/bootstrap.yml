@@ -1,8 +1,8 @@
-eureka:
-  client:
-    registryFetchIntervalSeconds: 5
-    serviceUrl:
-      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://192.168.99.100:8761/eureka/}
-  instance:
-    hostname: ${APPLICATION_DOMAIN}
-#    nonSecurePort: 80
+spring.cloud.consul.discovery.preferIpAddress: true
+spring.cloud.consul.discovery.enabled: false
+
+spring.cloud.consul.host: 192.168.99.100
+---
+spring:
+  profiles: consul
+spring.cloud.consul.host: consul-server-8500.service.consul
