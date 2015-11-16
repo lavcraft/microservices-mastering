@@ -1,12 +1,12 @@
 server.port: 8080
-spring.application.name: fee-service-external
+spring.application.name: fee-service
 
 user-service.endpoint: http://192.168.99.100:9000/user-service/thrift/user
 
 ---
 spring:
   profiles: consul
-user-service.endpoint: http://gateway-server.service.consul:9000/user-service/thrift/user
+user-service.endpoint: http://gateway-server:9000/user-service/thrift/user
 
 ---
 spring:

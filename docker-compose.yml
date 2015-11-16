@@ -1,10 +1,3 @@
-gateway-server:
-  image: gateway-server
-  container_name: gateway-server
-  ports:
-    - "9000:9000"
-  restart: always
-
 consul:
   image: gliderlabs/consul-server
   container_name: consul
@@ -12,23 +5,15 @@ consul:
     - "8400:8400"
     - "8500:8500"
     - "53:8600/udp"
-  command: "-bootstrap -advertise 192.168.99.100 -ui-dir /ui"
-  restart: always
-
-registrator:
-  image: gliderlabs/registrator
-  container_name: registrator
-  net: "host"
-  volumes:
-    - "/var/run/docker.sock:/tmp/docker.sock"
-  command: "-ip 192.168.99.100 consul://192.168.99.100:8500"
+  net: "dn"
+  command: "-bootstrap -ui-dir /ui"
   restart: always
 
 fee-service:
   image: fee-service-external
-  dns: 172.17.42.1
   ports:
     - "8080"
+  net: "dn"
   environment:
     - "SERVICE_NAME=fee-service"
     - "SERVICE_CHECK_HTTP=/health"
@@ -37,9 +22,9 @@ fee-service:
 
 user-service:
   image: user-thrift-service
-  dns: 172.17.42.1
   ports:
     - "8080"
+  net: "dn"
   environment:
     - "SERVICE_NAME=user-service"
     - "SERVICE_CHECK_HTTP=/health"
@@ -48,11 +33,23 @@ user-service:
 
 payment-service:
   image: payment-service
-  dns: 172.17.42.1
   ports:
     - "8080"
+  net: "dn"
   environment:
     - "SERVICE_NAME=payment-service"
     - "SERVICE_CHECK_HTTP=/health"
     - "SPRING_PROFILES_ACTIVE=consul"
+  restart: always
+
+gateway-server:
+  image: gateway-server
+  container_name: gateway-server
+  ports:
+    - "9000:9000"
+  net: "dn"
+  environment:
+      - "SERVICE_NAME=gateway-server"
+      - "SERVICE_CHECK_HTTP=/health"
+      - "SPRING_PROFILES_ACTIVE=consul"
   restart: always
