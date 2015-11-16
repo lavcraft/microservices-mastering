@@ -3,7 +3,7 @@ dependencies {
   compile("org.springframework.boot:spring-boot-starter-web")
   compile("org.springframework.cloud:spring-cloud-starter-feign")
 
-  compile "org.springframework.cloud:spring-cloud-consul-core:1.0.0.M1"
-  compile "org.springframework.cloud:spring-cloud-consul-discovery:1.0.0.M1"
-  compile "org.springframework.cloud:spring-cloud-consul-config:1.0.0.M1"
+  compile "org.springframework.cloud:spring-cloud-consul-core:1.0.0.M3"
+  compile "org.springframework.cloud:spring-cloud-consul-discovery:1.0.0.M3"
+  compile "org.springframework.cloud:spring-cloud-consul-config:1.0.0.M3"
 }

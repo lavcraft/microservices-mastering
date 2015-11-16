@@ -50,6 +50,9 @@ subprojects {
   dependencies {
     provided("org.projectlombok:lombok")
 
+    compile "com.ecwid.consul:consul-api:+"
+    compile "joda-time:joda-time:+"
+
     testCompile("org.springframework.boot:spring-boot-starter-test")
   }
 
@@ -58,6 +61,8 @@ subprojects {
       commandLine 'docker', 'build','--force-rm=true', "--tag='${project.name}'", '.'
     }
   }
+
+  dockerBuild.dependsOn build
 }
 
 task wrapper(type: Wrapper) {
